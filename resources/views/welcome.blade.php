@@ -11,6 +11,7 @@
         <video onplay="onPlay()" id="inputVideo" autoplay muted></video>
         <canvas id="overlay"></canvas>
     </div>
+    <div id="cutImage"></div>
 </body>
 
   <script>
@@ -43,23 +44,33 @@
 
 
             const detections = await faceapi.detectSingleFace(videoEl, options)
-
             if (detections) {
                 const detectionsForSize = faceapi.resizeResults(detections, { width: videoEl.videoWidth, height: videoEl.videoHeight })
                 const canvas = document.getElementById('overlay')
+                
                 canvas.width = videoEl.videoWidth
                 canvas.height = videoEl.videoHeight
                 faceapi.drawDetection(canvas, detectionsForSize, { withScore:  true })
-            }
-            else
-              console.log("f")
 
-            setTimeout(() => onPlay())
+
+                const box=detections.box
+                const regionsToExtract = [
+                  new faceapi.Rect(box.x, box.y, box.width, box.height)
+                ]
+                const canvases = await faceapi.extractFaces(videoEl, regionsToExtract)
+                var $image = $("#cutImage");
+                 
+                var img = document.createElement("img");
+                img.src = canvases[0].toDataURL();
+                $image.html(img);
+                // sleep(100)
+            }
+
+            setTimeout(() => onPlay(),100)
         }
         
         async function onPlay() {
             run2()
-            // setTimeout(() => onPlay())
         }
 
         $(document).ready(function() {

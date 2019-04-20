@@ -23,4 +23,8 @@ class Attendee extends Model
         $r->count+=$by;
         $r->save();
     }
+
+    public function sections(){
+        return $this->belongsToMany(Section::class);
+    }
 }

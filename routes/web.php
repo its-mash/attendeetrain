@@ -15,3 +15,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::post('addimage','AttendeeController@addImage');
+Route::post('createsection','SectionController@createSection');
+Route::post('addstudents','SectionController@addStudents');

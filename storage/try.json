@@ -1,0 +1,17 @@
+{
+	"courseCode":"CSC 1103",
+	"courseName":"OOP",
+	"section":1,
+	"lecturer":"Dr. Ali"
+
+}
+
+{
+	"courseCode":"CSC 2104",
+	"section":1,
+	"students":[
+		"1326493",
+		"1326495",
+		"1435121"
+	]
+}

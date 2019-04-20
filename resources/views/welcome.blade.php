@@ -7,15 +7,55 @@
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 </head>
 <body>
-    <div style="position: relative" class="margin">
-        <video onplay="onPlay()" id="inputVideo" autoplay muted></video>
-        <canvas id="overlay"></canvas>
+    <div style="border:2px solid blue" class="side-by-side">
+      <div style="position: relative;border:2px solid red" class="margin">
+          <video style="" onplay="onPlay()" id="inputVideo" autoplay muted></video>
+          <canvas  id="overlay" ></canvas>
+      </div>
+      <div class="" >
+        <img id="cutImage" src="demo.png" alt="dd" style="height:270px;width:270px;object-fit:contain">
+      </div>
     </div>
-    <div id="cutImage"></div>
+    <div class="side-by-side margin">
+      Matric No : <input type="text" name="matricNo">
+      Full Name : <input type="text" name="fullName">
+      Called As : <input type="text" name="callName">
+      <button onclick="snap()">Take pic</button>
+      <button onclick="upload()">upload</button>
+      Uploaded<span id="counter">0</span>
+    </div>
+    
 </body>
 
   <script>
-        let minFaceSize = 200
+        let minFaceSize = 100, takePic=false,imageData="";
+        snap = () => {
+          takePic=true
+          console.log($("input[name=matricNo]").val())
+        }
+        function upload(){
+            if(imageData!=""){
+                console.log("uploading")
+                $.ajax({
+                  type: "POST",
+                  url: "addimage",
+                  data: {
+                    "_token": "{{ csrf_token() }}", 
+                    img: imageData,
+                    matricNo: $("input[name=matricNo]").val() ,
+                    fullName: $("input[name=fullName]").val(),
+                    callName: $("input[name=callName]").val()
+                  },
+                  
+                }).done(function(o) {
+                  console.log(o); 
+                  // If you want the file to be visible in the browser 
+                  // - please modify the callback in javascript. All you
+                  // need is to return the url to the file, you just saved 
+                  // and than put the image in your browser.
+                });
+            }
+        }
         function isFaceDetectionModelLoaded() {
           return !!faceapi.nets.mtcnn.params
         }
@@ -35,7 +75,7 @@
         
         async function run2() {
             const videoEl = $('#inputVideo').get(0)
-
+            // console.log(takePic)
             if(videoEl.paused || videoEl.ended || !isFaceDetectionModelLoaded())
             return setTimeout(() => onPlay())
 
@@ -52,21 +92,24 @@
                 canvas.height = videoEl.videoHeight
                 faceapi.drawDetection(canvas, detectionsForSize, { withScore:  true })
 
+                if(takePic){
+                    const box=detections.box
+                    const regionsToExtract = [
+                      new faceapi.Rect(box.x, box.y, box.width, box.height)
+                    ]
+                    const canvases = await faceapi.extractFaces(videoEl, regionsToExtract)
+                    var $image = $("#cutImage")
+                    imageData=canvases[0].toDataURL()
+                    $image.attr("src",imageData)
+                    takePic=false
 
-                const box=detections.box
-                const regionsToExtract = [
-                  new faceapi.Rect(box.x, box.y, box.width, box.height)
-                ]
-                const canvases = await faceapi.extractFaces(videoEl, regionsToExtract)
-                var $image = $("#cutImage");
-                 
-                var img = document.createElement("img");
-                img.src = canvases[0].toDataURL();
-                $image.html(img);
+
+                }
+
                 // sleep(100)
             }
 
-            setTimeout(() => onPlay(),100)
+            setTimeout(() => onPlay())
         }
         
         async function onPlay() {

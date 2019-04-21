@@ -7,6 +7,8 @@ use App\Attendee;
 use Storage;
 class AttendeeController extends Controller
 {
+
+
     function addImage(Request $req){
         $matricNo=$req->matricNo;
         $path = 'attendee/'.$matricNo;
@@ -28,6 +30,11 @@ class AttendeeController extends Controller
 
         $count= Attendee::getCount($matricNo);
         $fileName=($count+1).'.png';
+
+
+
+
+
         if(Storage::disk('local')->put($path.'/'.$fileName, $data)){
             Attendee::countChange($matricNo,1);
             return "stored";

@@ -63,11 +63,11 @@
 
         async function run() {
         
-            const MODELS = "/"; // Contains all the weights.
+            const MODELS = "/model"; // Contains all the weights.
         
             await faceapi.loadMtcnnModel(MODELS)
-            
-
+            // await faceapi.loadFaceLandmarkModel(MODELS)
+            // await faceapi.loadFaceRecognitionModel(MODELS)
             const stream = await navigator.mediaDevices.getUserMedia({ video: {} })
             const videoEl = $('#inputVideo').get(0)
             videoEl.srcObject = stream
@@ -83,8 +83,9 @@
             const options = await new faceapi.MtcnnOptions({ minFaceSize })
 
 
-            const detections = await faceapi.detectSingleFace(videoEl, options)
+            const detections = await faceapi.detectSingleFace(videoEl, options);//.withFaceLandmarks().withFaceDescriptor()
             if (detections) {
+                // console.log(detections)
                 const detectionsForSize = faceapi.resizeResults(detections, { width: videoEl.videoWidth, height: videoEl.videoHeight })
                 const canvas = document.getElementById('overlay')
                 

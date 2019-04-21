@@ -19,7 +19,7 @@ class CreateAttendeeSectionTable extends Migration
             $table->foreign('attendee_id')->references('id')->on('attendees');
             $table->bigInteger('section_id')->unsigned();
             $table->foreign('section_id')->references('id')->on('sections');
-            $table->timestamps();
+            $table->string('person_id');
         });
     }
 

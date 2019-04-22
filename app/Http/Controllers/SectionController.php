@@ -63,7 +63,7 @@ class SectionController extends Controller
 
     public function addFace($url, $matricNo){
         $directory='attendee/'.$matricNo;
-        return collect(Storage::files($directory))->map(function($file) use ($url){
+        return collect(Storage::files($directory))->map(function($file) use ($url,$matricNo){
             // echo Storage::url($file);
             $img_url=asset($file);
             $client = new Client();
@@ -71,7 +71,7 @@ class SectionController extends Controller
                 'json' => ['url'=>$img_url],
                 'headers'=>$this->headers
             ]);
-            return $res->getBody();
+            return $matricNo."=>".$res->getBody();
         });
     }
 
@@ -95,11 +95,11 @@ class SectionController extends Controller
                 'json' => ['name'=>$studentRow->callName],
                 'headers'=>$this->headers
             ]);
-            echo $res->getStatusCode();
+            echo $matricNo.'=>'.$res->getBody()+'\n';
             $person_id=json_decode($res->getBody())->personId;
             $secRow->attendees()->attach($studentRow,array("person_id"=>$person_id));
 
-            array_push($tr,$this->addFace($url.'/'.$person_id.'/persistedFaces',$matricNo));
+            array_push($tr, $this->addFace($url.'/'.$person_id.'/persistedFaces',$matricNo));
         }
         return var_dump($tr);
     }

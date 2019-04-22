@@ -63,7 +63,7 @@ class SectionController extends Controller
 
     public function addFace($url, $matricNo){
         $directory='attendee/'.$matricNo;
-        collect(Storage::files($directory))->map(function($file) use ($url){
+        return collect(Storage::files($directory))->map(function($file) use ($url){
             // echo Storage::url($file);
             $img_url=asset($file);
             $client = new Client();
@@ -73,7 +73,6 @@ class SectionController extends Controller
             ]);
             return $res->getBody();
         });
-
     }
 
 

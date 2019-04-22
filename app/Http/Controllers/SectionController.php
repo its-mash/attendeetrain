@@ -71,7 +71,7 @@ class SectionController extends Controller
                 'json' => ['url'=>$img_url],
                 'headers'=>$this->headers
             ]);
-            return var_dump($res);
+            return $res-getBody();
         });
 
     }

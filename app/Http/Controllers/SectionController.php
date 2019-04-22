@@ -71,7 +71,7 @@ class SectionController extends Controller
                 'json' => ['url'=>$img_url],
                 'headers'=>$this->headers
             ]);
-            return $res-getBody();
+            return $res->getBody();
         });
 
     }
@@ -85,6 +85,7 @@ class SectionController extends Controller
         $secRow=Section::where('courseCode',$courseCode)->where("section",$section)->first();
 
         $url=$this->uriBase.$courseCode.$section.'/persons';
+        $tr=array();
         foreach ($students as $matricNo){
             $studentRow=Attendee::where('matricNo',$matricNo)->first();
             if($secRow->attendees()->find($studentRow->id))
@@ -99,8 +100,8 @@ class SectionController extends Controller
             $person_id=json_decode($res->getBody())->personId;
             $secRow->attendees()->attach($studentRow,array("person_id"=>$person_id));
 
-            $this->addFace($url.'/'.$person_id.'/persistedFaces',$matricNo);
+            array_push($tr,$this->addFace($url.'/'.$person_id.'/persistedFaces',$matricNo));
         }
-        return "success";
+        return var_dump($tr);
     }
 }

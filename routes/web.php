@@ -17,3 +17,18 @@ Route::get('/', function () {
 Route::post('addimage','AttendeeController@addImage');
 Route::post('createsection','SectionController@createSection');
 Route::post('addstudents','SectionController@addStudents');
+Route::get('attendee/{matricno}/{filename}', function ($matricno, $filename)
+{
+    // im not 100% sure about the $path thingy, you need to fiddle with this one around.
+    $path = storage_path(). '/app/attendee/'.$matricno.'/'. $filename;
+
+    if(!File::exists($path)) abort(404);
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
+});

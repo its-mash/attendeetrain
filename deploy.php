@@ -4,7 +4,7 @@ namespace Deployer;
 require 'recipe/laravel.php';
 
 // Project name
-set('application', 'aiattendance');
+set('application', 'attendeetrain');
 
 // Project repository
 set('repository', 'git@github.com:https:stdLn/attendeetrain.git');
@@ -23,7 +23,9 @@ add('writable_dirs', []);
 // Hosts
 
 host('209.97.163.184')
-    ->set('deploy_path', '~/{{application}}');    
+    ->user('deployer')
+    ->identityFile('~/.ssh/deployerkey')
+    ->set('deploy_path', '/var/www/html/attendeetrain');    
     
 // Tasks
 

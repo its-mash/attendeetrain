@@ -7,7 +7,7 @@ use App\Section;
 use App\Attendee;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
-
+use Storage;
 class SectionController extends Controller
 {
     private $uriBase;
@@ -62,17 +62,17 @@ class SectionController extends Controller
 
 
     public function addFace($url, $matricNo){
-
-        collect(Storage::files($directory))->map(function($file) {
-            echo Storage::url($file);
+        $directory='attendee/'.$matricNo;
+        collect(Storage::files($directory))->map(function($file) use ($url){
+            // echo Storage::url($file);
+            $img_url=asset($file);
             $client = new Client();
             $res = $client->request('POST',$url, [
                 'json' => ['url'=>$img_url],
                 'headers'=>$this->headers
             ]);
-            echo $res->getStatusCode();
-            echo $res->getBody();
-        })
+            return var_dump($res);
+        });
 
     }
 
@@ -99,7 +99,7 @@ class SectionController extends Controller
             $person_id=json_decode($res->getBody())->personId;
             $secRow->attendees()->attach($studentRow,array("person_id"=>$person_id));
 
-            addFace($url.'/'.$person_id.'/persistedFaces',$matricNo);
+            $this->addFace($url.'/'.$person_id.'/persistedFaces',$matricNo);
         }
         return "success";
     }

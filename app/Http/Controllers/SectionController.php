@@ -95,7 +95,7 @@ class SectionController extends Controller
                 'json' => ['name'=>$studentRow->callName],
                 'headers'=>$this->headers
             ]);
-            echo $matricNo.'=>'.$res->getBody()+'\n';
+            echo $matricNo.'=>'.$res->getBody().'\n';
             $person_id=json_decode($res->getBody())->personId;
             $secRow->attendees()->attach($studentRow,array("person_id"=>$person_id));
 

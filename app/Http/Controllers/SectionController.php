@@ -75,7 +75,14 @@ class SectionController extends Controller
         });
     }
 
+    public function train($url){
+        $client = new Client();
+        $res = $client->request('POST',$url, [
 
+            'headers'=>$this->headers
+        ]);
+        return "train => ".$res->getBody();
+    }
 
     public function addStudents(Request $r){
         $students=$r->students;
@@ -101,6 +108,7 @@ class SectionController extends Controller
 
             array_push($tr, $this->addFace($url.'/'.$person_id.'/persistedFaces',$matricNo));
         }
+        array_push($tr,$this->train($this->uriBase.$courseCode.$section.'/train'));
         return var_dump($tr);
     }
 }

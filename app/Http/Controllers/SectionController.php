@@ -123,8 +123,8 @@ class SectionController extends Controller
 
 
         $tr=array();
-        return $res->getBody();
-        array_push($tr,$res->getBody());
+        // return $res->getBody();
+        array_push($tr,"detect => ".$res->getBody());
 
         // $data=json_decode($res->getBody());
         // $faceIds=array_map(function($rr){return $rr->faceId;},$data);

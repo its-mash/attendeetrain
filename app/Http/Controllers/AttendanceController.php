@@ -9,6 +9,7 @@ use View;
 class AttendanceController extends Controller
 {
     public function getQRcode(Request $rq){
+        return $rq;
         $rr=Attendance::where('courseCode',$rq->courseCode)->where('section',$rq->section)->first();
         if(!$rr->isEmpty()){
             $r=$rr->get(0);

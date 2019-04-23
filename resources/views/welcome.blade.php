@@ -48,6 +48,8 @@
                   },
                   
                 }).done(function(o) {
+                  const i=parseInt($('#counter').text());
+                  $('#counter').text(i+1);
                   console.log(o); 
                   // If you want the file to be visible in the browser 
                   // - please modify the callback in javascript. All you

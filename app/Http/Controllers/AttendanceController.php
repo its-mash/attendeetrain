@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use App\Attendance;
 use Illuminate\Support\Str;
 use View;
+
 class AttendanceController extends Controller
 {
     public function getQRcode(Request $rq,$courseCode,$section){
         // return $courseCode;
         $rr=Attendance::where('courseCode',$courseCode)->where('section',$section)->get();
+        return $rr;
         if(!$rr->isEmpty()){
             $r=$rr->get(0);
             $tkey=Str::random(32);

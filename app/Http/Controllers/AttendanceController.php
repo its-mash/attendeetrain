@@ -10,7 +10,7 @@ class AttendanceController extends Controller
 {
     public function getQRcode(Request $rq,$courseCode,$section){
         // return $courseCode;
-        $rr=Attendance::where('courseCode',$rq->courseCode)->where('section',$rq->section)->get();
+        $rr=Attendance::where('courseCode',$courseCode)->where('section',$section)->get();
         if(!$rr->isEmpty()){
             $r=$rr->get(0);
             $tkey=Str::random(32);

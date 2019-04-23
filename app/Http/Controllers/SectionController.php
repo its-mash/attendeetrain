@@ -8,6 +8,8 @@ use App\Attendee;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 use Storage;
+
+use App\Attendance;
 class SectionController extends Controller
 {
     private $uriBase;
@@ -53,6 +55,11 @@ class SectionController extends Controller
             ]);
             echo $res->getStatusCode();
             echo $res->getBody();
+
+            $br=new Attendance;
+            $br->courseCode=$courseCode;
+            $br->section=$section;
+            $br->save();
 
             return "created";
         }

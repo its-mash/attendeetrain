@@ -120,9 +120,10 @@ class SectionController extends Controller
             'json' => ['url'=>$img_url],
             'headers'=>$this->headers
         ]);
-        $tr=array();
-        $data=json_decode($res->getBody());
-        array_push($tr,'detect=>'.$data);
-        var_dump($tr);
+        // $tr=array();
+        // $data=json_decode($res->getBody());
+        // array_push($tr,$res->getBody*());
+        // var_dump($tr);
+        return $res->getBody();
     }
 }

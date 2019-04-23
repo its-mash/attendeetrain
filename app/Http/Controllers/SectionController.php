@@ -112,18 +112,28 @@ class SectionController extends Controller
         return var_dump($tr);
     }
     public function recognize(Request $r){
-        $url="https://australiaeast.api.cognitive.microsoft.com/face/v1.0/detect";
+        $url="https://australiaeast.api.cognitive.microsoft.com/face/v1.0/";
         $img_url=asset("attendee/test/test1.png");
 
         $client = new Client();
-        $res = $client->request('POST',$url, [
+        $res = $client->request('POST',$url."detect", [
             'json' => ['url'=>$img_url],
             'headers'=>$this->headers
         ]);
-        // $tr=array();
-        // $data=json_decode($res->getBody());
-        // array_push($tr,$res->getBody*());
-        // var_dump($tr);
-        return $res->getBody();
+
+
+        $tr=array();
+        array_push($tr,$res->getBody());
+
+        $data=json_decode($res->getBody());
+        $faceIds=array_map(function($rr){return $rr->faceId;},$data);
+        $client = new Client();
+        $res = $client->request('POST',$url."identify", [
+            'json' => ["personGroupId"=>"csc77771","faceIds"=>$faceIds],
+            'headers'=>$this->headers
+        ]);
+        array_push($tr,$res->getBody());    
+
+        var_dump($tr);
     }
 }

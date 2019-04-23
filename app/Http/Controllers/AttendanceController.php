@@ -8,8 +8,8 @@ use Illuminate\Support\Str;
 use View;
 class AttendanceController extends Controller
 {
-    public function getQRcode( $courseCode, $section){
-        $rr=Attendance::where('courseCode',$courseCode)->where('section',$section)->first();
+    public function getQRcode(Request $rq){
+        $rr=Attendance::where('courseCode',$rq->courseCode)->where('section',$rq->section)->first();
         if(!$rr->isEmpty()){
             $r=$rr->get(0);
             $tkey=Str::random(32);

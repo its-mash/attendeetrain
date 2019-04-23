@@ -125,14 +125,14 @@ class SectionController extends Controller
         $tr=array();
         array_push($tr,$res->getBody());
 
-        $data=json_decode($res->getBody());
-        $faceIds=array_map(function($rr){return $rr->faceId;},$data);
-        $client = new Client();
-        $res = $client->request('POST',$url."identify", [
-            'json' => ["personGroupId"=>"csc77771","faceIds"=>$faceIds],
-            'headers'=>$this->headers
-        ]);
-        array_push($tr,$res->getBody());    
+        // $data=json_decode($res->getBody());
+        // $faceIds=array_map(function($rr){return $rr->faceId;},$data);
+        // $client = new Client();
+        // $res = $client->request('POST',$url."identify", [
+        //     'json' => ["personGroupId"=>"csc77771","faceIds"=>$faceIds],
+        //     'headers'=>$this->headers
+        // ]);
+        // array_push($tr,$res->getBody());    
 
         var_dump($tr);
     }

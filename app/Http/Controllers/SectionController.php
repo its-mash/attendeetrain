@@ -123,5 +123,6 @@ class SectionController extends Controller
         $tr=array();
 
         array_push($tr,'detect=>'.$res->getBody());
+        var_dump($tr);
     }
 }

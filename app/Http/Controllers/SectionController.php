@@ -121,8 +121,8 @@ class SectionController extends Controller
             'headers'=>$this->headers
         ]);
         $tr=array();
-
-        array_push($tr,'detect=>'.$res->getBody());
+        $data=json_decode($res->getBody());
+        array_push($tr,'detect=>'.$data);
         var_dump($tr);
     }
 }

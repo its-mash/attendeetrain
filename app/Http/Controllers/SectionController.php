@@ -111,4 +111,17 @@ class SectionController extends Controller
         array_push($tr,$this->train($this->uriBase.$courseCode.$section.'/train'));
         return var_dump($tr);
     }
+    public function recognize(Request $r){
+        $url="https://australiaeast.api.cognitive.microsoft.com/face/v1.0/detect";
+        $img_url=asset("attendee/test/test1.png");
+
+        $client = new Client();
+        $res = $client->request('POST',$url, [
+            'json' => ['url'=>$img_url],
+            'headers'=>$this->headers
+        ]);
+        $tr=array();
+
+        array_push($tr,'detect=>'.$res->getBody());
+    }
 }

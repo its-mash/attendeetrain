@@ -36,7 +36,7 @@ class AttendanceController extends Controller
         $rr=Attendance::where('key',$req->key)->get();
         if(!$rr->isEmpty()){
             $r=$rr->get(0);
-            $r->count=$r->count+1;
+            $r->count=($r->count)+1;
             $r->save();
             return "valid";
         }

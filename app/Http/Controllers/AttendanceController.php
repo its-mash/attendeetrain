@@ -19,9 +19,10 @@ class AttendanceController extends Controller
             $r->save();
     
             $data=array(
-                "courseCode"=>$courseCode,
+                "courseCode"=>strtoupper($courseCode),
                 "section"=>$section,
-                "src"=>"https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=".urlencode($tkey)
+                "src"=>"https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=".urlencode($tkey),
+                "key"=>$tkey
             );
             // echo $data['src'];
             return View::make("attendance")->with("data",$data);
@@ -42,5 +43,9 @@ class AttendanceController extends Controller
         else
             return "invalid";
 
+    }
+    public function getCount(Request $req){
+        $r=Attendance::where('key',$req->key)->first();
+        return $r->count;
     }
 }

@@ -33,7 +33,7 @@ class AttendanceController extends Controller
 
     }
     public function verifyQR(Request $req){
-        return "ddddddddddddddddddddddddd";
+        return json_encode($req);
         $rr=Attendance::where('key',$req->key)->get();
         if(!$rr->isEmpty()){
             $r=$rr->get(0);

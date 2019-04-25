@@ -155,7 +155,7 @@ class SectionController extends Controller
             // array_push($tr,"detect => ".$res->getBody());
 
             $data=json_decode($res->getBody());
-            if(array_key_exists("error", data))
+            if(array_key_exists("error", $data))
                 return json_encode($data);
             $faceIds=array_map(function($rr){return $rr->faceId;},$data);
             $faceRectangles=array_map(function($rr){return $rr->faceRectangle;},$data);

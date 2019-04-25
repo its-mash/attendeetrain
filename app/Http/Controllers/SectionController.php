@@ -181,7 +181,7 @@ class SectionController extends Controller
                 }
             }
 
-            
+            $faceRectangles['fileName']=$fileName;
             return json_encode($faceRectangles);
         }
         else{

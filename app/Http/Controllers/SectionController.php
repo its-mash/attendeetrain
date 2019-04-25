@@ -132,8 +132,8 @@ class SectionController extends Controller
         // return $data;
         // list(, $data)      = explode(':', $data);
         $data = base64_decode($data);
-        // return $data;
-        $fileName=($count+1).'.png';
+        return $data;
+        $fileName=($count).'.png';
         if(Storage::disk('local')->put($path.'/'.$fileName, $data)){
             $img_url=asset($path."/".$fileName);
 

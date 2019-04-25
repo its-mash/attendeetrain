@@ -156,6 +156,6 @@ class SectionController extends Controller
         ]);
         array_push($tr,"identify => ".$res->getBody());    
 
-        return json_encode($tr);
+        return json_encode($res->getBody());
     }
 }

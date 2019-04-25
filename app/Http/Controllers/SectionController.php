@@ -174,7 +174,7 @@ class SectionController extends Controller
                     $callName="undefined";
                     if($personId!='undefined'){
                         $attendee_id=DB::table('attendee_section')->where('person_id',$personId)->first()->attendee_id;
-                        $callName=Attendee::find(1)->callName;
+                        $callName=Attendee::find($attendee_id)->callName;
                     }
                     $faceRectangles[$key]->callName=$callName;
                     $faceRectangles[$key]->fileName=$fileName;

@@ -177,11 +177,10 @@ class SectionController extends Controller
                         $callName=Attendee::find(1)->callName;
                     }
                     $faceRectangles[$key]->callName=$callName;
+                    $faceRectangles[$key]->fileName=$fileName;
 
                 }
             }
-
-            $faceRectangles['fileName']=$fileName;
             return json_encode($faceRectangles);
         }
         else{

@@ -100,6 +100,7 @@ class SectionController extends Controller
         $url=$this->uriBase.$courseCode.$section.'/persons';
         $tr=array();
         foreach ($students as $matricNo){
+            echo "Adding ".$matricNo.'<br>';
             $studentRow=Attendee::where('matricNo',$matricNo)->first();
             if($secRow->attendees()->find($studentRow->id))
                 continue;
@@ -114,8 +115,11 @@ class SectionController extends Controller
             $secRow->attendees()->attach($studentRow,array("person_id"=>$person_id));
 
             array_push($tr, $this->addFace($url.'/'.$person_id.'/persistedFaces',$matricNo));
+            echo "Added".$matricNo.'<br>';
         }
+        echo "Training group".$courseCode.$section.'<br>';
         array_push($tr,$this->train($this->uriBase.$courseCode.$section.'/train'));
+        echo "Training finish".$courseCode.$section.'<br>';
         return var_dump($tr);
     }
     public function recognize(Request $r){
@@ -146,13 +150,14 @@ class SectionController extends Controller
 
             $tr=array();
             // return $res->getBody();
-            array_push($tr,"detect => ".$res->getBody());
+            // array_push($tr,"detect => ".$res->getBody());
 
             $data=json_decode($res->getBody());
             $faceIds=array_map(function($rr){return $rr->faceId;},$data);
+            $faceRectangles=array_map(function($rr){return $rr->faceRectangle;},$data);
             $client = new Client();
             $res = $client->request('POST',$url."identify", [
-                'json' => ["personGroupId"=>"csc77771","faceIds"=>$faceIds],
+                'json' => ["personGroupId"=>"csc77771","faceIds"=>$faceIds,"maxNumOfCandidatesReturned"=> 1],
                 'headers'=>$this->headers
             ]);
             array_push($tr,"identify => ".$res->getBody());   

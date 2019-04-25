@@ -129,6 +129,7 @@ class SectionController extends Controller
         $data=$r->img;
         
         // // list($type, $data) = explode(';', $data);
+        return $data;
         list(, $data)      = explode(':', $data);
         $data = base64_decode(ltrim($data));
         return $data;

@@ -10,6 +10,7 @@ use GuzzleHttp\Client;
 use Storage;
 use Carbon\Carbon;
 use App\Attendance;
+use DB;
 class SectionController extends Controller
 {
     private $uriBase;

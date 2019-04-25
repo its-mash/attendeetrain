@@ -11,6 +11,7 @@ use Storage;
 use Carbon\Carbon;
 use App\Attendance;
 use DB;
+use Illuminate\Support\Str;
 class SectionController extends Controller
 {
     private $uriBase;
@@ -139,7 +140,7 @@ class SectionController extends Controller
         // list(, $data)      = explode(':', $data);
         $data = base64_decode($data);
         // return $data;
-        $fileName=($count).'.png';
+        $fileName=(Str::random(32)).'.png';
         if(Storage::disk('local')->put($path.'/'.$fileName, $data)){
             $img_url=asset($path."/".$fileName);
 

@@ -8,7 +8,7 @@ use App\Attendee;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 use Storage;
-
+use Carbon\Carbon;
 use App\Attendance;
 class SectionController extends Controller
 {
@@ -78,6 +78,7 @@ class SectionController extends Controller
                 'json' => ['url'=>$img_url],
                 'headers'=>$this->headers
             ]);
+            echo (Carbon::now()->toDateTimeString())." Added ".$file.'<br>';
             return $matricNo."=>".$res->getBody();
         });
     }
@@ -100,7 +101,7 @@ class SectionController extends Controller
         $url=$this->uriBase.$courseCode.$section.'/persons';
         $tr=array();
         foreach ($students as $matricNo){
-            echo "Adding ".$matricNo.'<br>';
+            echo (Carbon::now()->toDateTimeString())." Adding ".$matricNo.'<br>';
             $studentRow=Attendee::where('matricNo',$matricNo)->first();
             if($secRow->attendees()->find($studentRow->id))
                 continue;
@@ -115,11 +116,11 @@ class SectionController extends Controller
             $secRow->attendees()->attach($studentRow,array("person_id"=>$person_id));
 
             array_push($tr, $this->addFace($url.'/'.$person_id.'/persistedFaces',$matricNo));
-            echo "Added".$matricNo.'<br>';
+            echo (Carbon::now()->toDateTimeString())." Added".$matricNo.'<br>';
         }
-        echo "Training group".$courseCode.$section.'<br>';
+        echo (Carbon::now()->toDateTimeString())." Training group".$courseCode.$section.'<br>';
         array_push($tr,$this->train($this->uriBase.$courseCode.$section.'/train'));
-        echo "Training finish".$courseCode.$section.'<br>';
+        echo (Carbon::now()->toDateTimeString())." Training finish".$courseCode.$section.'<br>';
         return var_dump($tr);
     }
     public function recognize(Request $r){

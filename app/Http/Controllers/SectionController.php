@@ -168,7 +168,7 @@ class SectionController extends Controller
                 $personIds=array_map(function($r){return empty($r->candidates[0])? "undefined":$r->candidates[0]->personId;},$data);
                 foreach($personIds as $key=>$personId){
                     $callName="undefined";
-                    if($value->personId!='undefined'){
+                    if($personId!='undefined'){
                         $attendee_id=DB::table('attendee_section')->where('person_id',$personId)->first()->attendee_id;
                         $callName=Attendee::find(1)->callName;
                     }

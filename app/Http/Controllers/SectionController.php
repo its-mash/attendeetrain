@@ -126,37 +126,42 @@ class SectionController extends Controller
         $section=$row->section;
         $count=$row->count;
 
-        $data=$r->img;
+        $data=json_decode($r->img);
         
-        // list($type, $data) = explode(';', $data);
-        // list(, $data)      = explode(',', $data);
-        $data = base64_decode($data);
-        // return /$data;
+        // // list($type, $data) = explode(';', $data);
+        // list(, $data)      = explode(':', $data);
+        $data = base64_decode($data->base64);
+        return $data;
         $fileName=($count+1).'.png';
-        Storage::disk('local')->put($path.'/'.$fileName, $data);
+        if(Storage::disk('local')->put($path.'/'.$fileName, $data)){
+            $img_url=asset($path."/".$fileName);
 
-        $img_url=asset($path."/".$fileName);
-
-        $client = new Client();
-        $res = $client->request('POST',$url."detect", [
-            'json' => ['url'=>$img_url],
-            'headers'=>$this->headers
-        ]);
+            $client = new Client();
+            $res = $client->request('POST',$url."detect", [
+                'json' => ['url'=>$img_url],
+                'headers'=>$this->headers
+            ]);
 
 
-        $tr=array();
-        // return $res->getBody();
-        array_push($tr,"detect => ".$res->getBody());
+            $tr=array();
+            // return $res->getBody();
+            array_push($tr,"detect => ".$res->getBody());
 
-        $data=json_decode($res->getBody());
-        $faceIds=array_map(function($rr){return $rr->faceId;},$data);
-        $client = new Client();
-        $res = $client->request('POST',$url."identify", [
-            'json' => ["personGroupId"=>"csc77771","faceIds"=>$faceIds],
-            'headers'=>$this->headers
-        ]);
-        array_push($tr,"identify => ".$res->getBody());    
+            $data=json_decode($res->getBody());
+            $faceIds=array_map(function($rr){return $rr->faceId;},$data);
+            $client = new Client();
+            $res = $client->request('POST',$url."identify", [
+                'json' => ["personGroupId"=>"csc77771","faceIds"=>$faceIds],
+                'headers'=>$this->headers
+            ]);
+            array_push($tr,"identify => ".$res->getBody());   
+            return $res->getBody();
+        }
+        else{
+            return "couldn't store";
+        }
+ 
 
-        return $res->getBody();
+        
     }
 }

@@ -127,11 +127,11 @@ class SectionController extends Controller
         $count=$row->count;
 
         $data=$r->img;
-        return $data;
-        list($type, $data) = explode(';', $data);
-        list(, $data)      = explode(',', $data);
+        
+        // list($type, $data) = explode(';', $data);
+        // list(, $data)      = explode(',', $data);
         $data = base64_decode($data);
-
+        return $data;
         $fileName=($count+1).'.png';
         Storage::disk('local')->put($path.'/'.$fileName, $data);
 

@@ -120,7 +120,21 @@ class SectionController extends Controller
     }
     public function recognize(Request $r){
         $url="https://australiaeast.api.cognitive.microsoft.com/face/v1.0/";
-        $img_url=asset("attendee/test/test1.png");
+        $path = 'attendee/test';
+        $row=Attendance::where('key',$r->key)->first();
+        $courseCode=$row->courseCode;
+        $section=$row->section;
+        $count=$row->count;
+
+        $data=$r->img;
+        list($type, $data) = explode(';', $data);
+        list(, $data)      = explode(',', $data);
+        $data = base64_decode($data);
+
+        $fileName=($count+1).'.png';
+        Storage::disk('local')->put($path.'/'.$fileName, $data);
+
+        $img_url=asset($path."/".$fileName);
 
         $client = new Client();
         $res = $client->request('POST',$url."detect", [
@@ -142,6 +156,6 @@ class SectionController extends Controller
         ]);
         array_push($tr,"identify => ".$res->getBody());    
 
-        var_dump($tr);
+        return json_encode($tr);
     }
 }

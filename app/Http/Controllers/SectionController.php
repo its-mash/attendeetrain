@@ -158,11 +158,27 @@ class SectionController extends Controller
             $faceRectangles=array_map(function($rr){return $rr->faceRectangle;},$data);
             $client = new Client();
             $res = $client->request('POST',$url."identify", [
-                'json' => ["personGroupId"=>"csc77771","faceIds"=>$faceIds,"maxNumOfCandidatesReturned"=> 1],
+                'json' => ["personGroupId"=>$courseCode.$section,"faceIds"=>$faceIds,"maxNumOfCandidatesReturned"=> 1],
                 'headers'=>$this->headers
             ]);
             array_push($tr,"identify => ".$res->getBody());   
-            return $res->getBody();
+            
+            $data=json_decode($res->getBody());
+            if(!empty($data)){
+                $personIds=array_map(function($r){return empty($r->candidates[0])? "undefined":$r->candidates[0]->personId;},$data);
+                foreach($personIds as $key=>$personId){
+                    $callName="undefined";
+                    if($value->personId!='undefined'){
+                        $attendee_id=DB::table('attendee_section')->where('person_id',$personId)->first()->attendee_id;
+                        $callName=Attendee::find(1)->callName;
+                    }
+                    $faceRectangles[$key]->callName=$callName;
+
+                }
+            }
+
+            
+            return json_encode($faceRectangles);
         }
         else{
             return "couldn't store";
@@ -172,3 +188,5 @@ class SectionController extends Controller
         
     }
 }
+
+

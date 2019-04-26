@@ -174,6 +174,7 @@ class SectionController extends Controller
                 $personIds=array_map(function($r){return empty($r->candidates[0])? "undefined":$r->candidates[0]->personId;},$data);
                 foreach($personIds as $key=>$personId){
                     $callName="undefined";
+                    $id=-1;
                     if($personId!='undefined'){
                         $attendee_id=DB::table('attendee_section')->where('person_id',$personId)->first()->attendee_id;
                         $callName=Attendee::find($attendee_id)->callName;
@@ -185,10 +186,13 @@ class SectionController extends Controller
                             $record->section=$section;
                             $record->attendee_id=$attendee_id;
                             $record->save();
+                            $id=$record->id;
                         }
+
                     }
                     $faceRectangles[$key]->callName=$callName;
                     $faceRectangles[$key]->fileName=$fileName;
+                    $faceRectangles[$key]->id=$id;
 
                 }
             }

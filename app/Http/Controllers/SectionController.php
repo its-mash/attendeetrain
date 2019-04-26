@@ -177,11 +177,14 @@ class SectionController extends Controller
                     if($personId!='undefined'){
                         $attendee_id=DB::table('attendee_section')->where('person_id',$personId)->first()->attendee_id;
                         $callName=Attendee::find($attendee_id)->callName;
-                        $record=new Record;
-                        $record->courseCode=$courseCode;
-                        $record->section=$section;
-                        $record->attendee_id=$attendee_id;
-                        $record->save();
+                        if(!Record::where('courseCode',$courseCode)->where('section',$section)->where('taken_at',Carbon::today()->isoFormat("DD-MM-YYYY"))->get())
+                        {
+                            $record=new Record;
+                            $record->courseCode=$courseCode;
+                            $record->section=$section;
+                            $record->attendee_id=$attendee_id;
+                            $record->save();
+                        }
                     }
                     $faceRectangles[$key]->callName=$callName;
                     $faceRectangles[$key]->fileName=$fileName;

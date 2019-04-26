@@ -10,6 +10,7 @@ use GuzzleHttp\Client;
 use Storage;
 use Carbon\Carbon;
 use App\Attendance;
+use App\Record;
 use DB;
 use Illuminate\Support\Str;
 class SectionController extends Controller

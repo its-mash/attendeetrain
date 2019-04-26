@@ -178,7 +178,7 @@ class SectionController extends Controller
                         $attendee_id=DB::table('attendee_section')->where('person_id',$personId)->first()->attendee_id;
                         $callName=Attendee::find($attendee_id)->callName;
                         $exx=Record::where('courseCode',$courseCode)->where('section',$section)->where('taken_at',Carbon::today()->isoFormat("DD-MM-YYYY"))->get();
-                        if(!$exx->isEmpty())
+                        if($exx->isEmpty())
                         {
                             $record=new Record;
                             $record->courseCode=$courseCode;

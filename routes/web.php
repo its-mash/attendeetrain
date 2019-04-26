@@ -21,6 +21,8 @@ Route::post('identify','SectionController@recognize');
 Route::get('attendance/{courseCode}/{section}','AttendanceController@getQRcode');
 Route::post('verifyqrcode','AttendanceController@verifyQR');
 Route::post('getcount','AttendanceController@getCount');
+Route::post('record','RecordController@record');
+
 Route::get('attendee/{matricno}/{filename}', function ($matricno, $filename)
 {
     // im not 100% sure about the $path thingy, you need to fiddle with this one around.

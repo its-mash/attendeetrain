@@ -152,12 +152,12 @@ class SectionController extends Controller
 
 
             $tr=array();
-            return $res->getBody();
+            // return $res->getBody();
             // array_push($tr,"detect => ".$res->getBody());
 
             $data=json_decode($res->getBody());
-            if(array_key_exists("error", $data))
-                return json_encode($data);
+            if(!empty($data))
+                return "no face found";
             $faceIds=array_map(function($rr){return $rr->faceId;},$data);
             $faceRectangles=array_map(function($rr){return $rr->faceRectangle;},$data);
             $client = new Client();

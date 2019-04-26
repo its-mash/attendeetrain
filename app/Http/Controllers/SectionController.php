@@ -180,7 +180,7 @@ class SectionController extends Controller
                         $record=new Record;
                         $record->courseCode=$courseCode;
                         $record->section=$section;
-                        $record->section_id=$attendee_id;
+                        $record->attendee_id=$attendee_id;
                         $record->save();
                     }
                     $faceRectangles[$key]->callName=$callName;

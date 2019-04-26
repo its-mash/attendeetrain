@@ -152,7 +152,7 @@ class SectionController extends Controller
 
 
             $tr=array();
-            // return $res->getBody();
+            return $res->getBody();
             // array_push($tr,"detect => ".$res->getBody());
 
             $data=json_decode($res->getBody());

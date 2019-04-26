@@ -175,6 +175,11 @@ class SectionController extends Controller
                     if($personId!='undefined'){
                         $attendee_id=DB::table('attendee_section')->where('person_id',$personId)->first()->attendee_id;
                         $callName=Attendee::find($attendee_id)->callName;
+                        $record=new Record;
+                        $record->courseCode=$courseCode;
+                        $record->section=$section;
+                        $record->section_id=$attendee_id;
+                        $record->save();
                     }
                     $faceRectangles[$key]->callName=$callName;
                     $faceRectangles[$key]->fileName=$fileName;
@@ -189,6 +194,10 @@ class SectionController extends Controller
  
 
         
+    }
+    public function takeAttendance(Request $req){
+        
+
     }
 }
 

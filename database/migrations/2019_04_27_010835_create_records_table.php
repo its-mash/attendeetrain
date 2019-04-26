@@ -14,6 +14,7 @@ class CreateRecordsTable extends Migration
     public function up()
     {
         Schema::create('records', function (Blueprint $table) {
+            $table->bigInteger("id");
             $table->string("courseCode");
             $table->integer("section");
             $table->string("taken_at")->default(Carbon::today()->isoFormat("DD-MM-YYYY"));

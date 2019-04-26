@@ -208,10 +208,6 @@ class SectionController extends Controller
 
         
     }
-    public function takeAttendance(Request $req){
-        
-
-    }
 }
 
 

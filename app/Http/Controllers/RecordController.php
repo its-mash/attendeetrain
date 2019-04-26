@@ -16,7 +16,10 @@ class RecordController extends Controller
         $record=Record::where('courseCode',$courseCode)->where('section',$section)->where('taken_at',Carbon::today()->isoFormat("DD-MM-YYYY"))->get();
         foreach($ids as $id){
             if($record->find($id)){
-                $record->find($id)->confirmed=1;
+                $attendeee=$record->find($id);
+                $attendeee->confirmed=true;
+                $attendeee->save();
+                
             }
             else
                 return "invalid person id";

@@ -188,6 +188,9 @@ class SectionController extends Controller
                             $record->save();
                             $id=$record->id;
                         }
+                        else{
+                            $id=$exx->get(0)->id;
+                        }
 
                     }
                     $faceRectangles[$key]->callName=$callName;

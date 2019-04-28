@@ -22,6 +22,7 @@ Route::get('attendance/{courseCode}/{section}','AttendanceController@getQRcode')
 Route::post('verifyqrcode','AttendanceController@verifyQR');
 Route::post('getcount','AttendanceController@getCount');
 Route::post('record','RecordController@record');
+// Route::get('getattendance','RecordController@getAttendance');
 
 Route::get('attendee/{matricno}/{filename}', function ($matricno, $filename)
 {

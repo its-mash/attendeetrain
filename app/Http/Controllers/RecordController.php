@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Attendance;
 use Carbon\Carbon;
@@ -26,4 +24,14 @@ class RecordController extends Controller
         }
         return "succesfully recorded";
     }
+    // public function getAttendance(Request $req){
+
+    //     require 'vendor/autoload.php';
+    //     $spreadsheet = new Spreadsheet();
+    //     $sheet = $spreadsheet->getActiveSheet();
+    //     $sheet->setCellValue('A1', 'Hello World !');
+
+    //     $writer = new Xlsx($spreadsheet);
+    //     $writer->save('hello world.xlsx');
+    // }
 }

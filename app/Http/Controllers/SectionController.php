@@ -40,7 +40,7 @@ class SectionController extends Controller
     public function createSection(Request $r){
         $courseCode=str_replace(' ', '', strtolower($r->courseCode));
         $section=$r->section;
-        $sc=Section::where('courseCode',$courseCode)->get();
+        $sc=Section::where('courseCode',$courseCode)->where('section',$section)->get();
         $s=null;
         if($sc->isEmpty()){
             $s=new Section;
@@ -185,6 +185,7 @@ class SectionController extends Controller
                             $record->courseCode=$courseCode;
                             $record->section=$section;
                             $record->attendee_id=$attendee_id;
+                            $record->taken_at=Carbon::today()->isoFormat("DD-MM-YYYY");
                             $record->save();
                             $id=$record->id;
                         }

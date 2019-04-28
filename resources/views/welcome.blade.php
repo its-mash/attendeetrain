@@ -8,7 +8,7 @@
 </head>
 <body>
     <div style="border:2px solid blue" class="side-by-side">
-      <div style="position: relative;border:2px solid red" class="margin">
+      <div style="position: relative;border:2px solid red;min-width:640px;min-height:480px" class="margin">
           <video style="" onplay="onPlay()" id="inputVideo" autoplay muted></video>
           <canvas  id="overlay" ></canvas>
       </div>

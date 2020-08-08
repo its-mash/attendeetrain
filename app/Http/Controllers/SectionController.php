@@ -21,9 +21,9 @@ class SectionController extends Controller
 
 
     function __construct() {
-        $this->ocpApimSubscriptionKey = '71edb9d36a6b47bcae9e38fb83239404';
+        $this->ocpApimSubscriptionKey = '4a42b67c93404e6ab1f3e63c1b3238e8';
         
-        $this->uriBase = 'https://australiaeast.api.cognitive.microsoft.com/face/v1.0/persongroups/';
+        $this->uriBase = 'https://murad01.cognitiveservices.azure.com/face/v1.0/persongroups/';
 
         // This sample uses the PHP5 HTTP_Request2 package
         // (https://pear.php.net/package/HTTP_Request2).
@@ -75,7 +75,7 @@ class SectionController extends Controller
         $directory='attendee/'.$matricNo;
         return collect(Storage::files($directory))->map(function($file) use ($url,$matricNo){
             // echo Storage::url($file);
-            $img_url=asset($file);
+            $img_url=asset("store/".$file);
             $client = new Client();
             $res = $client->request('POST',$url, [
                 'json' => ['url'=>$img_url],
@@ -100,13 +100,15 @@ class SectionController extends Controller
         $courseCode=str_replace(' ', '', strtolower($r->courseCode));
         $section=$r->section;
         $secRow=Section::where('courseCode',$courseCode)->where("section",$section)->first();
+        
+        if($secRow==null) return "invalid section";
 
         $url=$this->uriBase.$courseCode.$section.'/persons';
         $tr=array();
         foreach ($students as $matricNo){
             echo (Carbon::now()->toDateTimeString())." Adding ".$matricNo.'<br>';
             $studentRow=Attendee::where('matricNo',$matricNo)->first();
-            if($secRow->attendees()->find($studentRow->id))
+            if($secRow->attendees->isNotEmpty() && $secRow->attendees()->find($studentRow->id))
                 continue;
             
             $client = new Client();
@@ -127,8 +129,8 @@ class SectionController extends Controller
         return var_dump($tr);
     }
     public function recognize(Request $r){
-        $url="https://australiaeast.api.cognitive.microsoft.com/face/v1.0/";
-        $path = 'attendee/test';
+        $url="https://murad01.cognitiveservices.azure.com/face/v1.0/";
+        $path = 'test/'.Carbon::now()->toDateString();;
         $row=Attendance::where('key',$r->key)->first();
         $courseCode=$row->courseCode;
         $section=$row->section;
@@ -141,9 +143,11 @@ class SectionController extends Controller
         // list(, $data)      = explode(':', $data);
         $data = base64_decode($data);
         // return $data;
-        $fileName=(Str::random(32)).'.png';
+        // $fileName=(Str::random(32)).'.png';
+        $fileName=(str_replace(' ', '', Carbon::now()->toDateTimeString())).'.png';
+
         if(Storage::disk('local')->put($path.'/'.$fileName, $data)){
-            $img_url=asset($path."/".$fileName);
+            $img_url=asset("store/".$path."/".$fileName);
 
             $client = new Client();
             $res = $client->request('POST',$url."detect", [

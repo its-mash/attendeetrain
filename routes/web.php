@@ -24,10 +24,10 @@ Route::post('getcount','AttendanceController@getCount');
 Route::post('record','RecordController@record');
 // Route::get('getattendance','RecordController@getAttendance');
 
-Route::get('attendee/{matricno}/{filename}', function ($matricno, $filename)
+Route::get('store/{root}/{matricno}/{filename}', function ($root,$matricno, $filename)
 {
     // im not 100% sure about the $path thingy, you need to fiddle with this one around.
-    $path = storage_path(). '/app/attendee/'.$matricno.'/'. $filename;
+    $path = storage_path(). '/app/'.$root.'/'.$matricno.'/'. $filename;
 
     if(!File::exists($path)) abort(404);
 

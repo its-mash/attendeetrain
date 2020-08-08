@@ -7,4 +7,4 @@
 4. `php artisan migrate`
 5. `valet link`
 6. `valet secure attendeetrain`
-7. `valet serve`
+7. `valet share`

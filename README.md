@@ -6,5 +6,5 @@
 3. `php artisan key:generate`
 4. `php artisan migrate`
 5. `valet link`
-6 `valet secure attendeetrain`
-7 `valet serve`
+6. `valet secure attendeetrain`
+7. `valet serve`

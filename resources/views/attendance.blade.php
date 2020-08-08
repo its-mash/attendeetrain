@@ -12,11 +12,17 @@
         <!-- {{$data['src']}} -->
         <div> 
             <h2>{{$data['courseCode']}}-{{$data['section']}}</h2>
+
+        </div>
+        <div>
+            {{$data["key"]}}
         </div>
         <img src="{{$data['src']}}" title="Link to Google.com" />
+
         <div>
             <font id ="counter" size="7">0</font>
         </div>
+
     </div>
     <script>
         function update(){

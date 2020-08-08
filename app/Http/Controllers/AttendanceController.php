@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Attendance;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use View;
-
+use Storage;
 class AttendanceController extends Controller
 {
     public function getQRcode(Request $rq,$courseCode,$section){
@@ -48,5 +49,18 @@ class AttendanceController extends Controller
     public function getCount(Request $req){
         $r=Attendance::where('key',$req->key)->first();
         return $r->count;
+    }
+    public function gallery(Request $req,$courseCode,$section){
+        $directory='test/'.$courseCode.$section."/".(Carbon::now()->toDateString());
+        $imgs=collect(Storage::files($directory))->map(function($file){
+                // echo Storage::url($file);
+                $img_url=asset("store/".$file);
+                return $img_url;
+                });
+        $data=array(
+            "imgs" =>$imgs,
+            "count"=>$imgs->count()   
+        );
+        return view("gallery",["data"=>$data]);
     }
 }

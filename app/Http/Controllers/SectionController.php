@@ -129,12 +129,13 @@ class SectionController extends Controller
         return var_dump($tr);
     }
     public function recognize(Request $r){
-        $url="https://murad01.cognitiveservices.azure.com/face/v1.0/";
-        $path = 'test/'.Carbon::now()->toDateString();;
         $row=Attendance::where('key',$r->key)->first();
         $courseCode=$row->courseCode;
         $section=$row->section;
         $count=$row->count;
+
+        $url="https://murad01.cognitiveservices.azure.com/face/v1.0/";
+        $path = 'test/'.$courseCode.$section."/".(Carbon::now()->toDateString());
 
         $data=$r->img;
         // return $data;

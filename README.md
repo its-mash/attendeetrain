@@ -1,5 +1,7 @@
 # attendeetrain
-setup instructions: https://scotch.io/tutorials/deploying-laravel-to-digitalocean
+Server setup instructions: https://scotch.io/tutorials/deploying-laravel-to-digitalocean
+
+SSL setup : https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-16-04
 ## Start up
 1. copy .env.examples to .env and update database info
 2. Install packages using `sudo apt install php-gd php-zip` && `composer install`

@@ -8,3 +8,9 @@
 5. `valet link`
 6. `valet secure attendeetrain`
 7. `valet share`
+
+## Links
+QR code: https://attendeetrain.test/attendance/CS118/1
+
+Gallery: https://attendeetrain.test/gallery/cs118/1
+

@@ -1,5 +1,5 @@
 # attendeetrain
-
+setup instructions: https://scotch.io/tutorials/deploying-laravel-to-digitalocean
 ## Start up
 1. copy .env.examples to .env and update database info
 2. Install packages using `sudo apt install php-gd` && `composer install`

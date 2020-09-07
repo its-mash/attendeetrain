@@ -14,7 +14,7 @@
 <body>
     {{-- {{var_dump($data)}} --}}
     <div class="container text-center h1">
-        Total pic: 5
+        Total pic: {{$data["count"]}}
     </div>
     <div class="container">
         <div class="row">

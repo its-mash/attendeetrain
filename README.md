@@ -12,7 +12,10 @@ SSL setup : https://www.digitalocean.com/community/tutorials/how-to-create-a-sel
 7. `valet share`
 
 ## Links
-QR code: https://attendeetrain.test/attendance/CS118/1
 
-Gallery: https://attendeetrain.test/gallery/cs118/1
+QR code: https://site.com/attendance/courseCode/section
+   Ex:   https://128.199.246.222/attendance/cs118/1
+         
+Gallery: https://site.com/gallery/courseCode/section
+   Ex:   https://128.199.246.222/gallery/CS118/1
 

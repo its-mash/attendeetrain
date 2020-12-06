@@ -24,6 +24,8 @@ Route::post('verifyqrcode','AttendanceController@verifyQR');
 Route::post('getcount','AttendanceController@getCount');
 Route::post('record','RecordController@record');
 // Route::get('getattendance','RecordController@getAttendance');
+Route::get('deletegroups','SectionController@deleteGroups');
+
 
 Route::get('store/attendee/{matricno}/{filename}', function ($matricno, $filename)
 {
